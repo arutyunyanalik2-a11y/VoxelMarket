@@ -55,7 +55,7 @@ export default function Menu() {
                             <img src={product.image} alt={product.name} />
                             <h3>{product.name}</h3>
                             <p style={{ color: '#777', fontSize: '11px', margin: '2px 0' }}>Категория: {product.category}</p>
-                            <p style={{ fontWeight: 'bold', fontSize: '14px', margin: '4px 0' }}>{product.price} ₽</p>
+                            <p style={{ fontWeight: 'bold', fontSize: '14px', margin: '4px 0' }}>{product.price} ֏</p>
                             <button 
                                 className="karzinu" 
                                 onClick={(e) => addToCart(product, e)}

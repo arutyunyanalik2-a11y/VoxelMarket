@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './conteyner/components/Navbar/Navbar';
 import AdminLogin from './conteyner/components/Admin/AdminLogin';
