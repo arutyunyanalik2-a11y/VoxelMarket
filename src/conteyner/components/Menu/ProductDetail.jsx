@@ -150,7 +150,7 @@ export default function ProductDetail() {
                     <p style={{ color: '#777', fontSize: '16px' }}>Категория: {product.category}</p>
                     <p style={{ fontSize: '15px', margin: '15px 0' }}>{product.description || "Описание отсутствует"}</p>
                     <p style={{ fontSize: '14px', color: '#555' }}>Формат: {product.format}</p>
-                    <p style={{ fontWeight: 'bold', fontSize: '24px', margin: '20px 0' }}>{product.price} ₽</p>
+                    <p style={{ fontWeight: 'bold', fontSize: '24px', margin: '20px 0' }}>{product.price} ֏</p>
                     
                     <div style={{ display: 'flex', gap: '15px' }}>
                         <button 

@@ -43,7 +43,7 @@ export default function Menu() {
             <div className="products-list">
                 {filteredProducts.length === 0 ? (
                     <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#666', padding: '20px' }}>
-                        {searchQuery ? "Ничего не найдено по вашему запросу..." : "Товаров пока нет..."}
+                        {searchQuery ? "Ничего не найдено по вашему запросу..." : "Загрузка товаров  "}
                     </p>
                 ) : (
                     filteredProducts.map(product => (
