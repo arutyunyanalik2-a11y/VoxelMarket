@@ -24,7 +24,7 @@
 .product-card {
     width: 230px;
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 15px;
     border-radius: 8px;
     cursor: pointer;
     background: #fff;
@@ -140,8 +140,85 @@
     }
 
     .karzinu {
-        padding: 6px;
+        padding: 8px;
         font-size: 11px;
-        margin-top: 5px;
+        margin-top: 7px;
+    }
+}
+
+
+/* Контейнер: гарантирует идеальный центр экрана и на ПК, и на телефонах */
+.voxel-loader-wrapper {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh; /* Занимает высоту видимой части экрана */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.voxel-empty-text {
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+}
+
+.voxel-loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+/* Спиннер с вашим точным градиентом */
+.voxel-spinner {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    /* Ваш градиент */
+    background: linear-gradient(120deg, rgb(17, 0, 255) 0%, rgba(255, 157, 0, 1) 100%);
+    
+    /* Вырезаем середину, чтобы получилось стильное кольцо */
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 0);
+    mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 0);
+    
+    /* Анимация непрерывного вращения */
+    animation: voxel-spin 0.9s linear infinite;
+    
+    /* Легкая неоновая подсветка в тон градиента */
+    filter: drop-shadow(0 0 12px rgba(17, 0, 255, 0.4));
+}
+
+/* Текст под спиннером */
+.voxel-loading-text {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(17, 0, 255);
+    letter-spacing: 0.5px;
+    animation: voxel-pulse 1.4s ease-in-out infinite;
+}
+
+/* Анимация вращения */
+@keyframes voxel-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Анимация плавного мерцания текста */
+@keyframes voxel-pulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
     }
 }
