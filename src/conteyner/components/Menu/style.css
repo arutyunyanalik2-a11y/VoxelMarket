@@ -20,7 +20,6 @@
     margin-top: 20px;
 }
 
-/* Обычная карточка для ПК */
 .product-card {
     width: 230px;
     border: 1px solid #ddd;
@@ -33,18 +32,24 @@
     justify-content: space-between;
     box-sizing: border-box;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+    /* Анимация появления при загрузке страницы */
     animation: fadeInUp 0.4s ease forwards;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    /* Плавный переход для наведения и убирания курсора */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+    /* Красивая двойная свечение-тень без миганий */
+    box-shadow: -4px 4px 15px rgba(38, 0, 255, 0.692),
+        4px -4px 15px rgba(255, 136, 0, 0.829);
 }
 
 .product-card img {
     width: 100%;
-    height: 140px;
+    height: 200px;
     object-fit: cover;
     border-radius: 6px;
 }
@@ -97,6 +102,7 @@
         opacity: 0;
         transform: translateY(15px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -131,7 +137,7 @@
     }
 
     .product-card img {
-        height: 110px;
+        height: 170px;
     }
 
     .product-card h3 {
@@ -153,7 +159,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 60vh; /* Занимает высоту видимой части экрана */
+    min-height: 60vh;
+    /* Занимает высоту видимой части экрана */
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
@@ -181,14 +188,14 @@
     border-radius: 50%;
     /* Ваш градиент */
     background: linear-gradient(120deg, rgb(17, 0, 255) 0%, rgba(255, 157, 0, 1) 100%);
-    
+
     /* Вырезаем середину, чтобы получилось стильное кольцо */
     -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 0);
     mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 0);
-    
+
     /* Анимация непрерывного вращения */
     animation: voxel-spin 0.9s linear infinite;
-    
+
     /* Легкая неоновая подсветка в тон градиента */
     filter: drop-shadow(0 0 12px rgba(17, 0, 255, 0.4));
 }
@@ -208,6 +215,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -215,10 +223,77 @@
 
 /* Анимация плавного мерцания текста */
 @keyframes voxel-pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.4;
     }
+
     50% {
         opacity: 1;
     }
+}
+
+.order-button {
+    /* Сохраняем вашу цветовую гамму и угол 120deg.
+       Создаем 'бесконечную ленту' градиента для плавного перелива. */
+    background: linear-gradient(120deg,
+            rgb(17, 0, 255) 0%,
+            rgba(255, 157, 0, 1) 50%,
+            rgb(17, 0, 255) 100%);
+
+    /* Делаем фон в 2 раза шире самой кнопки, чтобы было что смещать */
+    background-size: 200% auto;
+
+    /* Стартовое состояние фона: левая часть градиента */
+    background-position: 0% 0%;
+
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+
+    /* Сохраняем ваш переход прозрачности и добавляем плавность для позиции фона */
+    transition: opacity 0.2s ease-in-out, background-position 0.2s;
+}
+
+.order-button:hover {
+    opacity: 0.95;
+    /* Запускаем анимацию перелива по диагонали.
+       0.7s - скорость одной волны, 1 - количество повторов. */
+    animation: gradient-diagonal 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+}
+
+/* Эффект при нажатии: чуть-чуть затемняем */
+.order-button:active {
+    opacity: 1;
+}
+
+/* Анимация движения градиента: от 0% до 100% по оси X */
+@keyframes gradient-diagonal {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        /* Смещаем фон полностью вправо. Из-за угла 120deg
+           это выглядит как перелив по диагонали. */
+        background-position: 100% 0%;
+    }
+}
+
+.karzinu1 {
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    margin-top: 8px;
+    width: 100%;
+    padding: 8px;
+    color: white;
+    background-color: rgb(17, 0, 255 );
 }

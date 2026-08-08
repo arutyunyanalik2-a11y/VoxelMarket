@@ -63,7 +63,7 @@ export default function Menu() {
                             className="product-card"
                             onClick={() => navigate(`/product/${product._id}`)}
                         >
-                            <img src={product.image} alt={product.name} />
+                            <img className="menuImg" src={product.image} alt={product.name} />
                             <h3>{product.name}</h3>
                             <p style={{ color: '#777', fontSize: '11px', margin: '2px 0' }}>Категория: {product.category}</p>
                             <p style={{ fontWeight: 'bold', fontSize: '14px', margin: '4px 0' }}>{product.price} ֏</p>

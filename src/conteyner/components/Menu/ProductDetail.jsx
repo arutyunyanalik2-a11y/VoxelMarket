@@ -154,15 +154,15 @@ export default function ProductDetail() {
                     
                     <div style={{ display: 'flex', gap: '15px' }}>
                         <button 
-                            className="karzinu" 
+                            className="karzinu1" 
                             style={{ padding: '12px 20px', fontSize: '16px' }}
                             onClick={addToCart}
                         >
                             В корзину
                         </button>
                         <button 
+                        className="order-button"
                             onClick={handleOpenModal}
-                            style={{ padding: '12px 20px', fontSize: '16px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}
                         >
                             Оформить заказ
                         </button>
