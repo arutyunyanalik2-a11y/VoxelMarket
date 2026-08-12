@@ -11,6 +11,7 @@ import RegisterPage from './conteyner/components/pages/Register';
 import ProfilePage from './conteyner/components/pages/ProfilePage';
 import ProductDetail from './conteyner/components/Menu/ProductDetail';
 import Cart from './conteyner/components/Menu/Cart';
+import MiniZahar from './conteyner/components/Zaxar/Chat';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/ai" element={<MiniZahar />} />
         </Routes>
       </main>
       

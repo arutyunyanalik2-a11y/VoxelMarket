@@ -129,6 +129,12 @@ export default function Navbar() {
                         </li> */}
 
                         <li>
+                            <Link to="/ai" className={`${styles.link} ${styles.adminLink}`} onClick={closeMenu}>
+                                <span>Zaxar AI</span>
+                            </Link>
+                        </li>
+
+                        <li>
                             <Link to="/cart" className={styles.link} onClick={closeMenu}>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <circle cx="9" cy="21" r="1"></circle>

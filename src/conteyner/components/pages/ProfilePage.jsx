@@ -34,11 +34,11 @@ function MapUpdater({ center }) {
 export default function ProfilePage() {
     const [email, setEmail] = useState("");
     const [avatar, setAvatar] = useState("");
-    
+
     const [addresses, setAddresses] = useState([]);
     const [orders, setOrders] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     const [markerPosition, setMarkerPosition] = useState(null);
     const [mapCenter, setMapCenter] = useState([40.1872, 44.5152]);
     const [streetName, setStreetName] = useState("");
@@ -61,7 +61,7 @@ export default function ProfilePage() {
         const userEmail = localStorage.getItem('userEmail') || '';
         setEmail(userEmail);
         setAvatar(localStorage.getItem('userAvatar') || '');
-        
+
         if (userEmail) {
             // Загрузка адресов
             fetch(`https://voxelmarket-backend.onrender.com/api/users/addresses/${userEmail}`)
@@ -104,13 +104,13 @@ export default function ProfilePage() {
     const handleSelectSearchResult = (result) => {
         const lat = parseFloat(result.lat);
         const lon = parseFloat(result.lon);
-        
+
         setMapCenter([lat, lon]);
         setMarkerPosition([lat, lon]);
-        
+
         const shortName = result.display_name.split(',')[0];
-        setStreetName(shortName); 
-        
+        setStreetName(shortName);
+
         setSearchResults([]);
         setSearchQuery("");
     };
@@ -143,7 +143,7 @@ export default function ProfilePage() {
             if (response.ok) {
                 const updatedAddresses = await response.json();
                 setAddresses(updatedAddresses);
-                
+
                 setMarkerPosition(null);
                 setStreetName("");
                 setIsMultiStory(false);
@@ -188,13 +188,17 @@ export default function ProfilePage() {
                 <h1>Личный кабинет</h1>
                 <div className="profile-info" style={{ textAlign: 'center', margin: '20px 0' }}>
                     {avatar ? (
-                        <img 
-                            src={avatar} 
-                            alt="Avatar" 
-                            style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px' }} 
+                        <img
+                            src={avatar}
+                            alt="Avatar"
+                            style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px' }}
                         />
                     ) : (
-                        <div style={{ fontSize: '50px', marginBottom: '10px' }}>👤</div>
+                        <div style={{ fontSize: '50px', marginBottom: '10px' }}>                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        </div>
                     )}
                     <p><strong>Email:</strong> {email}</p>
                 </div>
@@ -240,7 +244,7 @@ export default function ProfilePage() {
                 <div className="addresses-section">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                         <h2>Мои адреса доставки</h2>
-                        <button 
+                        <button
                             onClick={() => setIsModalOpen(true)}
                             style={{ backgroundColor: '#28a745', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' }}
                         >
@@ -262,7 +266,7 @@ export default function ProfilePage() {
                                             </p>
                                         )}
                                     </div>
-                                    <button 
+                                    <button
                                         onClick={() => handleDeleteAddress(addr._id)}
                                         style={{ backgroundColor: '#ff4d4d', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '5px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold' }}
                                     >
@@ -286,12 +290,12 @@ export default function ProfilePage() {
                 <div className="modal-overlay" onClick={() => setIsModalOpen(false)} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.6)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
                     <div className="modal-content" onClick={e => e.stopPropagation()} style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', width: '90%', maxWidth: '500px', maxHeight: '90vh', overflowY: 'auto' }}>
                         <h2 style={{ marginTop: 0 }}>Поиск и выбор адреса</h2>
-                        
+
                         <div style={{ position: 'relative', marginBottom: '15px', zIndex: 2000 }}>
                             <form onSubmit={handleSearch} style={{ display: 'flex', gap: '8px' }}>
-                                <input 
-                                    type="text" 
-                                    placeholder="Например: Ереван, Абовяна 10" 
+                                <input
+                                    type="text"
+                                    placeholder="Например: Ереван, Абовяна 10"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc', boxSizing: 'border-box' }}
@@ -300,12 +304,12 @@ export default function ProfilePage() {
                                     Найти
                                 </button>
                             </form>
-                            
+
                             {searchResults.length > 0 && (
                                 <ul style={{ position: 'absolute', top: '100%', left: 0, right: 0, backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '5px', maxHeight: '200px', overflowY: 'auto', listStyle: 'none', padding: 0, margin: '5px 0 0 0', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
                                     {searchResults.map((result) => (
-                                        <li 
-                                            key={result.place_id} 
+                                        <li
+                                            key={result.place_id}
                                             onClick={() => handleSelectSearchResult(result)}
                                             style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #eee', fontSize: '14px' }}
                                             onMouseOver={(e) => e.target.style.backgroundColor = '#f0f0f0'}
@@ -331,17 +335,17 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="address-form" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                            <input 
-                                type="text" 
-                                placeholder="Название улицы и номер дома..." 
+                            <input
+                                type="text"
+                                placeholder="Название улицы и номер дома..."
                                 value={streetName}
                                 onChange={(e) => setStreetName(e.target.value)}
                                 style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', width: '100%', boxSizing: 'border-box' }}
                             />
-                            
+
                             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
-                                <input 
-                                    type="checkbox" 
+                                <input
+                                    type="checkbox"
                                     checked={isMultiStory}
                                     onChange={(e) => setIsMultiStory(e.target.checked)}
                                     style={{ transform: 'scale(1.2)' }}
@@ -351,31 +355,31 @@ export default function ProfilePage() {
 
                             {isMultiStory && (
                                 <div style={{ display: 'flex', gap: '10px' }}>
-                                    <input 
-                                        type="text" 
-                                        placeholder="Этаж" 
+                                    <input
+                                        type="text"
+                                        placeholder="Этаж"
                                         value={floor}
                                         onChange={(e) => setFloor(e.target.value)}
                                         style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', width: '50%', boxSizing: 'border-box' }}
                                     />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Квартира/Дверь" 
+                                    <input
+                                        type="text"
+                                        placeholder="Квартира/Дверь"
                                         value={apartment}
                                         onChange={(e) => setApartment(e.target.value)}
                                         style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc', width: '50%', boxSizing: 'border-box' }}
                                     />
                                 </div>
                             )}
-                            
+
                             <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                                <button 
+                                <button
                                     onClick={handleSaveAddress}
                                     style={{ flex: 1, backgroundColor: '#007bff', color: 'white', border: 'none', padding: '12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
                                 >
                                     Сохранить адрес
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => setIsModalOpen(1 === 2)} // или просто () => setIsModalOpen(false)
                                     style={{ flex: 1, backgroundColor: '#6c757d', color: 'white', border: 'none', padding: '12px', borderRadius: '6px', cursor: 'pointer' }}
                                 >
