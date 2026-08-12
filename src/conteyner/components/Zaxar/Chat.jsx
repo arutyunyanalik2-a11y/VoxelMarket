@@ -29,7 +29,7 @@ const MiniZahar = () => {
             // Если сайт уже в интернете (на Render/Vercel), то автоматически используется адрес твоего бэкенда на Render.
             const apiUrl = window.location.hostname === 'localhost'
                 ? 'http://localhost:5000/api/chat'
-                : 'https://название-твоего-сервиса.onrender.com/api/chat';
+                : 'https://voxelmarket-backend.onrender.com/api/chat';
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
