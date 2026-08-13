@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Form, useNavigate, useSearchParams } from "react-router-dom";
 import "./style.css";
+import { Link } from "react-router-dom";
+import zaxar from "./image/zaxarwith.png";
 
 // Массив с картинками для карусели
 const bannerImages = [
@@ -16,7 +18,7 @@ export default function Menu() {
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
     const navigate = useNavigate();
-    
+
     const [currentSlide, setCurrentSlide] = useState(0);
 
     // Загрузка товаров
@@ -73,8 +75,8 @@ export default function Menu() {
             {/* Показываем карусель только если нет поиска и картинок больше нуля */}
             {!searchQuery && bannerImages.length > 0 && (
                 <div className="carousel-container">
-                    <div 
-                        className="carousel-track" 
+                    <div
+                        className="carousel-track"
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
                         {bannerImages.map((img, index) => (
@@ -83,7 +85,7 @@ export default function Menu() {
                             </div>
                         ))}
                     </div>
-                    
+
                     {/* ИСПРАВЛЕНИЕ: Кнопки и точки показываются только если слайдов больше одного */}
                     {bannerImages.length > 1 && (
                         <>
@@ -141,6 +143,12 @@ export default function Menu() {
                     ))
                 )}
             </div>
+            <Link to="/ai">
+                <div title="Zaxar AI" className="ai-button">
+                    <img className="imgzaxar" src={zaxar} alt="" />
+                    {/* <span>AI</span> */}
+                </div>
+            </Link>
         </div>
     );
 }
