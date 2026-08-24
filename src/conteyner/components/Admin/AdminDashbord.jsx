@@ -205,6 +205,41 @@ export default function AdminDashboard() {
         }
     };
 
+    // --- НОВАЯ ФУНКЦИЯ ОБНОВЛЕНИЯ СТАТУСА ---
+    const handleStatusChange = async (id, newStatus) => {
+        // Оптимистичное обновление (UI меняется сразу)
+        setOrders(prevOrders => prevOrders.map(order => 
+            order._id === id ? { ...order, status: newStatus } : order
+        ));
+
+        try {
+            // Отправляем на сервер PATCH запрос с новым статусом
+            const response = await fetch(`${API_BASE_URL}/orders/${id}/status`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (response.ok) {
+                showNotification(`Статус изменен на "${newStatus}"`);
+            } else {
+                console.log('Бэкенд пока не принял статус, сохранено локально.');
+            }
+        } catch (error) {
+            console.error("Ошибка при обновлении статуса:", error);
+        }
+    };
+
+    // Функция для определения цвета в зависимости от статуса
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'Печать': return '#cce5ff';    // Голубой
+            case 'Доставка': return '#d4edda';  // Зеленый
+            case 'Оформлен': 
+            default: return '#fff3cd';          // Желтый (начальный)
+        }
+    };
+
     const handleLogout = () => {
         navigate('/admin');
     };
@@ -308,6 +343,7 @@ export default function AdminDashboard() {
                     <div className="dashboard-section">
                         <h2>Добавление товара</h2>
                         <form className="add-product-form" onSubmit={handleAddProduct}>
+                            {/* ... (остальной код формы без изменений) ... */}
                             <div className="form-group">
                                 <label>Название товара *</label>
                                 <input 
@@ -411,49 +447,77 @@ export default function AdminDashboard() {
                                             <th>Телефон</th>
                                             <th>Адрес / Местоположение</th>
                                             <th>Сумма</th>
+                                            <th>Статус</th> {/* НОВЫЙ СТОЛБЕЦ */}
                                             <th>Действие</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orders.map(order => (
-                                            <tr key={order._id}>
-                                                <td><strong style={{ color: '#0056b3' }}>#{order.code}</strong></td>
-                                                <td>{order.userEmail}</td>
-                                                <td>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                        {order.productImage && (
-                                                            <img src={order.productImage} alt="" style={{ width: '30px', height: '30px', objectFit: 'cover', borderRadius: '4px' }} />
-                                                        )}
-                                                        <span>{order.productName}</span>
-                                                    </div>
-                                                </td>
-                                                <td>{order.phone}</td>
-                                                <td>
-                                                    <span>{order.address || 'Адрес не указан'}</span>
-                                                    {order.address && (
-                                                        <div style={{ marginTop: '5px' }}>
-                                                            <button 
-                                                                type="button"
-                                                                onClick={() => setSelectedOrderMap(order)}
-                                                                style={{ backgroundColor: '#17a2b8', color: 'white', border: 'none', padding: '3px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' }}
-                                                            >
-                                                                🗺️ На карте Leaflet
-                                                            </button>
+                                        {orders.map(order => {
+                                            const currentStatus = order.status || 'Оформлен';
+                                            return (
+                                                <tr key={order._id}>
+                                                    <td><strong style={{ color: '#0056b3' }}>#{order.code}</strong></td>
+                                                    <td>{order.userEmail}</td>
+                                                    <td>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                            {order.productImage && (
+                                                                <img src={order.productImage} alt="" style={{ width: '30px', height: '30px', objectFit: 'cover', borderRadius: '4px' }} />
+                                                            )}
+                                                            <span>{order.productName}</span>
                                                         </div>
-                                                    )}
-                                                </td>
-                                                <td>{(Number(order.price) || 0).toLocaleString('ru-RU')} ֏</td>
-                                                <td>
-                                                    <button 
-                                                        type="button"
-                                                        onClick={() => handleDeleteOrder(order._id)}
-                                                        style={{ backgroundColor: '#28a745', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-                                                    >
-                                                        Выдан / Завершить
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                    </td>
+                                                    <td>{order.phone}</td>
+                                                    <td>
+                                                        <span>{order.address || 'Адрес не указан'}</span>
+                                                        {order.address && (
+                                                            <div style={{ marginTop: '5px' }}>
+                                                                <button 
+                                                                    type="button"
+                                                                    onClick={() => setSelectedOrderMap(order)}
+                                                                    style={{ backgroundColor: '#17a2b8', color: 'white', border: 'none', padding: '3px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', fontWeight: 'bold' }}
+                                                                >
+                                                                    🗺️ На карте Leaflet
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                    <td>{(Number(order.price) || 0).toLocaleString('ru-RU')} ֏</td>
+                                                    
+                                                    {/* ВЫПАДАЮЩЕЕ ОКНО СТАТУСА */}
+                                                    <td>
+                                                        <select
+                                                            value={currentStatus}
+                                                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                                                            style={{
+                                                                padding: '6px',
+                                                                borderRadius: '6px',
+                                                                border: '1px solid #ced4da',
+                                                                backgroundColor: getStatusColor(currentStatus),
+                                                                color: '#212529',
+                                                                fontWeight: '600',
+                                                                cursor: 'pointer',
+                                                                outline: 'none'
+                                                            }}
+                                                        >
+                                                            <option value="Оформлен">Оформлен</option>
+                                                            <option value="Печать">Печать</option>
+                                                            <option value="Доставка">Доставка</option>
+                                                            {/* Здесь можно будет легко добавить новые пункты */}
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <button 
+                                                            type="button"
+                                                            onClick={() => handleDeleteOrder(order._id)}
+                                                            style={{ backgroundColor: '#28a745', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                                                        >
+                                                            Завершить
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
@@ -526,7 +590,7 @@ export default function AdminDashboard() {
     );
 }
 
-// Вспомогательный компонент для Leaflet модалки с геокодером Nominatim
+// Вспомогательный компонент для Leaflet модалки
 function LeafletMapModal({ order, onClose }) {
     const mapContainerRef = useRef(null);
     const mapInstanceRef = useRef(null);
@@ -541,7 +605,6 @@ function LeafletMapModal({ order, onClose }) {
                 setLoadingGeo(true);
                 setGeoError(null);
 
-                // Проверяем, есть ли массив координат [lat, lon]
                 if (!order.coordinates || order.coordinates.length !== 2) {
                     setGeoError('У этого заказа нет точных координат метки.');
                     setLoadingGeo(false);

@@ -111,7 +111,7 @@ export default function ProfilePage() {
         const shortName = result.display_name.split(',')[0];
         setStreetName(shortName);
 
-        setSearchResults([]);
+        searchResults([]);
         setSearchQuery("");
     };
 
@@ -161,7 +161,6 @@ export default function ProfilePage() {
         }
     };
 
-    // Функция удаления адреса
     const handleDeleteAddress = async (addressId) => {
         if (!window.confirm("Вы уверены, что хотите удалить этот адрес?")) return;
 
@@ -194,10 +193,11 @@ export default function ProfilePage() {
                             style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px' }}
                         />
                     ) : (
-                        <div style={{ fontSize: '50px', marginBottom: '10px' }}>                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+                        <div style={{ fontSize: '50px', marginBottom: '10px' }}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
                         </div>
                     )}
                     <p><strong>Email:</strong> {email}</p>
@@ -229,8 +229,27 @@ export default function ProfilePage() {
                                             <p style={{ margin: 0, fontWeight: 'bold', color: '#28a745' }}>{order.price} ֏</p>
                                         </div>
                                     </div>
-                                    <div style={{ marginTop: '10px', fontSize: '13px', color: '#777', borderTop: '1px solid #f0f0f0', paddingTop: '8px' }}>
-                                        📍 Адрес: {order.address}
+                                    
+                                    {/* --- ДОБАВЛЕННЫЙ СТАТУС БАР --- */}
+                                    <div style={{ marginTop: '12px', fontSize: '13px', color: '#777', borderTop: '1px solid #f0f0f0', paddingTop: '10px' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                                            <span className="status" style={{ fontWeight: 'bold' }}> Статус:</span>
+                                            <span style={{
+                                                backgroundColor: 
+                                                    order.status === 'Доставка' ? '#d4edda' : 
+                                                    order.status === 'В печать' ? '#fff3cd' : '#f8f9fa',
+                                                color: 
+                                                    order.status === 'Доставка' ? '#155724' : 
+                                                    order.status === 'В печать' ? '#856404' : '#495057',
+                                                padding: '4px 10px',
+                                                borderRadius: '12px',
+                                                fontWeight: 'bold',
+                                                border: '1px solid #e0e0e0'
+                                            }}>
+                                                {order.status || 'Оформлен'}
+                                            </span>
+                                        </div>
+                                        <div> Адрес: {order.address}</div>
                                     </div>
                                 </div>
                             ))}
@@ -380,7 +399,7 @@ export default function ProfilePage() {
                                     Сохранить адрес
                                 </button>
                                 <button
-                                    onClick={() => setIsModalOpen(1 === 2)} // или просто () => setIsModalOpen(false)
+                                    onClick={() => setIsModalOpen(false)}
                                     style={{ flex: 1, backgroundColor: '#6c757d', color: 'white', border: 'none', padding: '12px', borderRadius: '6px', cursor: 'pointer' }}
                                 >
                                     Отмена
