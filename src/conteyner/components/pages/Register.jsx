@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
+import alex from "./image/alex.png"; // Импорт изображения
+
 
 export default function RegisterPage() {
     const [username, setUsername] = useState("");
@@ -33,11 +35,11 @@ export default function RegisterPage() {
 
         // Слова для анимации
         const shoppingWords = [
-            "Voxel Market", "Быстрая доставка", 
-            "Новинки", "Гаджеты",  
+            "Voxel Market", "Быстрая доставка",
+            "Новинки", "Гаджеты",
             "3D-модели", "3D печать"
         ];
-        
+
         const activeTexts = [];
 
         class FloatingText {
@@ -105,11 +107,11 @@ export default function RegisterPage() {
                 ctx.beginPath();
                 ctx.lineWidth = 2.5;
                 ctx.strokeStyle = wave.color;
-                
+
                 for (let x = -drawSpan; x <= drawSpan; x += 5) {
                     const y = Math.sin(x * wave.freq + time * wave.speed + index * 10) * (baseAmplitude * wave.amp)
-                            + Math.cos(x * wave.freq * 0.8 - time * wave.speed * 0.5) * (baseAmplitude * 0.4);
-                    
+                        + Math.cos(x * wave.freq * 0.8 - time * wave.speed * 0.5) * (baseAmplitude * 0.4);
+
                     if (x === -drawSpan) {
                         ctx.moveTo(x, y);
                     } else {
@@ -122,7 +124,7 @@ export default function RegisterPage() {
 
             animationFrameId = requestAnimationFrame(animate);
         };
-        
+
         animate();
 
         return () => {
@@ -169,15 +171,17 @@ export default function RegisterPage() {
                     zIndex: 0
                 }}
             />
+            <img src={alex} alt="Alex" className="alex" />
+
 
             {/* Карточка регистрации */}
-            <div className="login-card" style={{ 
-                position: 'relative', 
-                zIndex: 1, 
-                background: '#ffffff', 
-                padding: '40px', 
-                borderRadius: '15px', 
-                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)', 
+            <div className="login-card" style={{
+                position: 'relative',
+                zIndex: 1,
+                background: '#ffffff',
+                padding: '40px',
+                borderRadius: '15px',
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
                 border: '1px solid rgba(0, 0, 0, 0.05)'
             }}>
                 <h1 style={{ color: '#333' }}>Регистрация</h1>
@@ -213,7 +217,7 @@ export default function RegisterPage() {
                         />
                     </div>
                     <button type="submit" className="login-btn">Зарегистрироваться</button>
-                    
+
                     <p style={{ textAlign: 'center', marginTop: '15px', fontSize: '14px', color: '#666' }}>
                         Уже есть аккаунт? <Link to="/login" style={{ color: '#007bff' }}>Войти</Link>
                     </p>

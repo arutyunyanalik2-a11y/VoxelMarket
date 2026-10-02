@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
+import mia from "./image/mia.png"; // Импорт изображения
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -183,6 +184,7 @@ export default function LoginPage() {
                     zIndex: 0
                 }}
             />
+            <img src={mia} alt="Mia" className="mia"/>
 
             {/* Карточка авторизации */}
             <div className="login-card" style={{ 

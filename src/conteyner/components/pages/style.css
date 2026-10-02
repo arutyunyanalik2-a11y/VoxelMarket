@@ -17,6 +17,7 @@
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
+    margin-top: 100px;
 }
 
 .login-card h1 {
@@ -109,6 +110,14 @@
         padding: 24px 18px;
         border-radius: 12px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    .mia{
+        width: 200px;
+        /* height: 80px; */
+        position: absolute;
+        top: -30px;
+        left: 10px;
+        z-index: 1;
     }
 
     .login-card h1 {
@@ -219,4 +228,89 @@
 
 .status{
     color: blue;
+}
+
+.mia{
+    width: 200px;
+    /* height: 80px; */
+    position: absolute;
+    top: -30px;
+    left: 670px;
+    z-index: 1;
+}
+.alex{
+    width: 170px;
+    /* height: 80px; */
+    position: absolute;
+    top: -10px;
+    /* left: 600px; */
+    z-index: 1;
+}
+
+
+/* Базовые стили для маскота (ноутбуки / ПК) */
+.alex {
+    position: absolute;
+    width: 170px; /* Размер маскота */
+    left: 45%;
+    transform: translateX(-50%); /* Центрируем по горизонтали */
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+/* Базовые стили для маскота (ноутбуки / ПК) */
+.mia {
+    position: absolute;
+    width: 200px; /* Размер маскота */
+    left: 55%;
+    transform: translateX(-50%); /* Центрируем по горизонтали */
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 480px) {
+    .login-page {
+        padding: 15px;
+        align-items: center;
+    }
+
+    .login-card {
+        width: 100%;
+        padding: 24px 18px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        margin-top: 30px; /* Дополнительный отступ, чтобы маскот не упирался в шапку сайта */
+    }
+
+    .mia {
+        width: 200px; /* Чуть компактнее для маленьких экранов */
+        top: 10px;   /* Аккуратно сажаем на верхний край карточки на телефоне */
+        left: 240px;
+    }
+    .alex {
+        width: 200px; /* Чуть компактнее для маленьких экранов */
+        top: -1px;   /* Аккуратно сажаем на верхний край карточки на телефоне */
+        left: 170px;
+    }
+
+    .login-card h1 {
+        font-size: 22px;
+        margin-bottom: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group input {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+
+    .login-btn {
+        padding: 11px;
+        font-size: 15px;
+    }
 }
